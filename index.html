@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R-P-S Game</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/e391ce7786.js" crossorigin="anonymous"></script>
+    
+</head>
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <h2 id="demo">Try your luck !</h2>
+    <h2 id="res"></h2>
+
+    <div class="container">
+
+
+        <div class="section">
+            <div class="info">
+                <span id="playerScore"></span>
+            </div>
+            <div class="show">
+                <i id="player"></i>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="info">
+                <span id="computerScore"></span>
+            </div>
+            <div class="show">
+              <i id="computer"></i>
+            </div>
+        </div>
+    </div>
+    <h2 style="color: rgb(233, 33, 19);" id="demo2">Choose One !</h2>
+
+    <div class="selection">
+        <button class="fas fa-hand-rock" id="rock"></button>
+        <button class="fas fa-hand-paper" id="paper"></button>
+        <button class="fas fa-hand-scissors" id="scissors"></button>
+        <button  id="reset">reset</button>
+    </div>
+
+
+
+    <script>
+       
+        let playerscore=JSON.parse(localStorage.getItem('pscore'));;
+        let computerscore=JSON.parse(localStorage.getItem('cscore'));
+        showresult();
+    
+ 
+        function showresult(){
+            localStorage.setItem("pscore" ,JSON.stringify(playerscore));
+            localStorage.setItem("cscore" ,JSON.stringify(computerscore));
+            playerscore=JSON.parse(localStorage.getItem('pscore'));
+            computerscore=JSON.parse(localStorage.getItem('cscore'));
+         document.querySelector('#playerScore').innerHTML=`You :${playerscore}`;
+         document.querySelector('#computerScore').innerHTML= `Computer:${computerscore}`;
+         
+        }
+
+         const r=document.querySelector('#reset');
+        r.addEventListener('click',(e)=>{
+            e.defaultPrevented;
+            localStorage.clear();
+            playerscore=0;
+            computerscore=0;
+            showresult();
+
+        })
+ 
+        const x=document.querySelector('#rock');
+        
+ 
+        x.addEventListener('click',(e)=>{
+         let random= Math.floor(Math.random()*3+1);
+          e.defaultPrevented;
+          if(random==1){
+            document.querySelector('#player').innerHTML=`<i class="fas fa-hand-rock"></i> `;
+            document.querySelector('#computer').innerHTML=`<i class="fas fa-hand-rock"></i> `;
+            result("Match Draw");
+      
+          }
+          else if(random==2){
+            document.querySelector('#player').innerHTML=`<i class="fas fa-hand-rock"></i> `;
+            document.querySelector('#computer').innerHTML=`<i class="fas fa-hand-paper"></i> `;
+            computerscore++;
+         
+            result("You loss!");
+          }
+          else {
+             playerscore++;
+             document.querySelector('#player').innerHTML=`<i class="fas fa-hand-rock"></i> `;
+             document.querySelector('#computer').innerHTML=`<i class="fas fa-hand-scissors"></i> `;
+             result("You Win!");
+          }
+          
+         
+        
+          
+              showresult();
+        })
+ 
+        const y=document.querySelector('#paper');
+ 
+        y.addEventListener('click',(e)=>{
+          e.defaultPrevented;
+          let random= Math.floor(Math.random()*3+1);
+          if(random==2){
+            result('Match Draw');
+            document.querySelector('#player').innerHTML=`<i class="fas fa-hand-paper"></i> `;
+            document.querySelector('#computer').innerHTML=`<i class="fas fa-hand-paper"></i> `;
+            
+          }
+          else if(random==1)
+          {result("You loss!");
+          document.querySelector('#player').innerHTML=`<i class="fas fa-hand-paper"></i> `;
+          document.querySelector('#computer').innerHTML=`<i class="fas fa-hand-scissors"></i> `;
+          computerscore++;
+          }
+          else {
+            document.querySelector('#player').innerHTML=`<i class="fas fa-hand-paper"></i> `;
+            document.querySelector('#computer').innerHTML=`<i class="fas fa-hand-rock"></i> `;
+          playerscore++; 
+          
+          result("You Win !");
+          }
+ 
+          showresult();
+ 
+          
+        })
+ 
+ 
+        const z=document.querySelector('#scissors');
+ 
+        z.addEventListener('click',(e)=>{
+          e.defaultPrevented;
+          let random= Math.floor(Math.random()*3+1);
+          if(random==3){ 
+            document.querySelector('#player').innerHTML=`<i class="fas fa-hand-scissors"></i> `;
+            document.querySelector('#computer').innerHTML=`<i class="fas fa-hand-scissors"></i> `;
+            result('Match Draw');
+
+          }
+          else if(random==1){
+            document.querySelector('#player').innerHTML=`<i class="fas fa-hand-scissors"></i> `;
+            document.querySelector('#computer').innerHTML=`<i class="fas fa-hand-paper"></i> `;
+
+          playerscore++;  
+          result("You Win !");
+          }
+          else {
+            document.querySelector('#player').innerHTML=`<i class="fas fa-hand-scissors"></i> `;
+            document.querySelector('#computer').innerHTML=`<i class="fas fa-hand-rock"></i> `;
+          computerscore++;
+          result("You loss!");
+          }
+ 
+          showresult();
+ 
+        })
+ 
+        function result(data){
+            document.querySelector('#res').innerHTML=`${data}`;
+        }
+ 
+         
+     </script>
+</body>
+</html>
